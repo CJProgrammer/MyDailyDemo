@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  Core Foundation
+//  CJTextCycleView
 //
-//  Created by 耳东米青 on 2017/3/9.
-//  Copyright © 2017年 耳东米青. All rights reserved.
+//  Created by CJ on 2017/5/12.
+//  Copyright © 2017年 CJ. All rights reserved.
 //
 
 #import "AppDelegate.h"
