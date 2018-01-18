@@ -16,15 +16,18 @@
 
 + (UIImage *)qrCodeForURLStr:(NSString *)urlStr qrCodeSize:(CGFloat)qrCodeSize logoImage:(UIImage *)logoImage logoSize:(CGFloat)logoSize {
     
+    // 二维码过滤器
     CIFilter * filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    // 设置过滤器默认属性
     [filter setDefaults];
     
+    // 将字符串转换成 NSdata (虽然二维码本质上是字符串,但是这里需要转换,不转换就崩溃)
     NSData * data = [urlStr dataUsingEncoding:NSUTF8StringEncoding];
-    //通过kvo方式给一个字符串，生成二维码
+    // 设置过滤器的 输入值  ,KVC赋值
     [filter setValue:data forKey:@"inputMessage"];
-    //设置二维码的纠错水平，越高纠错水平越高，可以污损的范围越大
+    // 设置二维码的纠错水平，越高纠错水平越高，可以污损的范围越大
     [filter setValue:@"H" forKey:@"inputCorrectionLevel"];
-    //拿到二维码图片
+    // 拿到二维码图片
     CIImage * outPutImage = [filter outputImage];
     
     return [[self alloc] createQRUIImageWithQRCIImage:outPutImage qrCodeSize:qrCodeSize logoImage:logoImage logoSize:logoSize];
@@ -65,12 +68,15 @@
     UIImage * qrImage = [UIImage imageWithCGImage:scaledImage];
     
     if (logoImage) {
-        // 4.给二维码加 logo 图
+        // 4.给二维码加 logo 图，开启图形上下文
         UIGraphicsBeginImageContextWithOptions(qrImage.size, NO, 0);
+        // 把二维码图片画上去.
         [qrImage drawInRect:CGRectMake(0, 0, qrCodeSize, qrCodeSize)];
         // 把logo图画到生成的二维码图片上，注意尺寸不要太大（最大不超过二维码图片的%30），太大会造成扫不出来
         [logoImage drawInRect:CGRectMake((qrCodeSize - logoSize) / 2.0, (qrCodeSize - logoSize) / 2.0, logoSize, logoSize)];
+        // 获取当前画得的这张图片
         UIImage * qrLogoImage = UIGraphicsGetImageFromCurrentImageContext();
+        // 关闭图形上下文
         UIGraphicsEndImageContext();
         
         return qrLogoImage;
