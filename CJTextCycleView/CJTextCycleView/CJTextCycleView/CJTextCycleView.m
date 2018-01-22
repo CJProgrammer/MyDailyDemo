@@ -9,8 +9,9 @@
 #import "CJTextCycleView.h"
 #import "CJTextCycleCell.h"
 
-static const NSInteger count = 100000;
-static const CGFloat timeInterval = 1.5;
+static NSInteger const count = 100000;
+static CGFloat const timeInterval = 2;
+static CGFloat const kItemHeight = 50;
 
 @interface CJTextCycleView ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -49,7 +50,7 @@ static const CGFloat timeInterval = 1.5;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 0;
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.itemSize = self.bounds.size;
+    flowLayout.itemSize = CGSizeMake(self.bounds.size.width, kItemHeight);
     self.flowLayout = flowLayout;
     
     UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flowLayout];
@@ -78,10 +79,10 @@ static const CGFloat timeInterval = 1.5;
 
 //每个循环要执行的东西
 - (void)scrollToNextText {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
     if (self.currentPage == count - 1) {//如果是最后一个
         self.currentPage = 0;
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentPage inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
     }
     self.currentPage ++;
 }
