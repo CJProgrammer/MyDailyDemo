@@ -25,7 +25,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.hidden = YES;
     
-    CJDotView *dotView = [[CJDotView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    CJDotView *dotView = [[CJDotView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
     dotView.center = self.view.center;
     [self.view addSubview:dotView];
     
